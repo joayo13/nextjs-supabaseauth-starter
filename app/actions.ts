@@ -8,14 +8,30 @@ import { redirect } from "next/navigation";
 export const signUpAction = async (formData: FormData) => {
   const email = formData.get("email")?.toString();
   const password = formData.get("password")?.toString();
+  const username = formData.get("username")?.toString();
   const supabase = await createClient();
   const origin = (await headers()).get("origin");
 
-  if (!email || !password) {
+  if (!email || !password || !username) {
     return encodedRedirect(
       "error",
       "/sign-up",
-      "Email and password are required",
+      "Email, password, and username are required",
+    );
+  }
+
+  // Check if username already exists
+  const { data: existingUser } = await supabase
+    .from('profiles')
+    .select('username')
+    .eq('username', username)
+    .single();
+
+  if (existingUser) {
+    return encodedRedirect(
+      "error",
+      "/sign-up",
+      "Username already taken. Please choose another one.",
     );
   }
 
@@ -24,6 +40,9 @@ export const signUpAction = async (formData: FormData) => {
     password,
     options: {
       emailRedirectTo: `${origin}/auth/callback`,
+      data: {
+        username: username,
+      }
     },
   });
 
