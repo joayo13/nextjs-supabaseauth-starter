@@ -1,3 +1,4 @@
+import Link from "next/link";
 import NextLogo from "./next-logo";
 import SupabaseLogo from "./supabase-logo";
 
@@ -9,6 +10,9 @@ export default function Header() {
         Finding something to watch has never been easier.
       </p>
       <div className="w-full p-[1px] bg-gradient-to-r from-transparent via-foreground/10 to-transparent my-8" />
+      <p>
+        <Link href="/sign-up">Sign up</Link> to get started.
+      </p>
     </div>
   );
 }

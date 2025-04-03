@@ -1,5 +1,4 @@
 import DeployButton from "@/components/deploy-button";
-import { EnvVarWarning } from "@/components/env-var-warning";
 import HeaderAuth from "@/components/header-auth";
 import { ThemeSwitcher } from "@/components/theme-switcher";
 import { TMDBAttribution } from "@/components/tmdb-attribution";
@@ -47,7 +46,7 @@ export default function RootLayout({
                     <div className="flex items-center gap-2">
                     </div>
                   </div>
-                  {!hasEnvVars ? <EnvVarWarning /> : <HeaderAuth />}
+                  <HeaderAuth />
                 </div>
               </nav>
               <div className="flex flex-col gap-20 max-w-5xl p-5">
