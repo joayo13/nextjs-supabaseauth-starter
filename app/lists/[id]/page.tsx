@@ -1,14 +1,13 @@
 import { createClient } from "@/utils/supabase/server";
 import { notFound } from "next/navigation";
 
-interface PageProps {
+type ListPageParams = {
     params: {
         id: string;
     };
-    searchParams: { [key: string]: string | string[] | undefined };
-}
+};
 
-export default async function ListPage({ params }: PageProps) {
+export default async function ListPage({ params }: ListPageParams) {
     const supabase = await createClient();
 
     const { data: list, error } = await supabase
