@@ -1,6 +1,13 @@
 import { createServerClient } from "@supabase/ssr";
 import { type NextRequest, NextResponse } from "next/server";
 
+// Define protected routes that require authentication
+const PROTECTED_ROUTES = [
+  "/dashboard",
+  "/create-list",
+  // Add more protected routes here as needed
+];
+
 export const updateSession = async (request: NextRequest) => {
   // This `try/catch` block is only here for the interactive tutorial.
   // Feel free to remove once you have Supabase connected.
@@ -39,13 +46,19 @@ export const updateSession = async (request: NextRequest) => {
     // https://supabase.com/docs/guides/auth/server-side/nextjs
     const user = await supabase.auth.getUser();
 
-    // protected routes
-    if (request.nextUrl.pathname.startsWith("/protected") && user.error) {
+    // Check if the current path is a protected route
+    const isProtectedRoute = PROTECTED_ROUTES.some(route =>
+      request.nextUrl.pathname.startsWith(route)
+    );
+
+    // Redirect to sign-in if accessing protected route without authentication
+    if (isProtectedRoute && user.error) {
       return NextResponse.redirect(new URL("/sign-in", request.url));
     }
 
+    // Redirect authenticated users away from home page
     if (request.nextUrl.pathname === "/" && !user.error) {
-      return NextResponse.redirect(new URL("/protected", request.url));
+      return NextResponse.redirect(new URL("/dashboard", request.url));
     }
 
     return response;

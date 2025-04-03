@@ -4,6 +4,13 @@ import Link from "next/link";
 import { Badge } from "./ui/badge";
 import { Button } from "./ui/button";
 import { createClient } from "@/utils/supabase/server";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "./ui/dropdown-menu";
+import { Menu } from "lucide-react";
 
 export default async function AuthButton() {
   const supabase = await createClient();
@@ -48,14 +55,46 @@ export default async function AuthButton() {
       </>
     );
   }
-  return user ? (
-    <div className="flex items-center gap-4">
-      Hey, {user.user_metadata.username || user.email}!
+
+  const AuthLinks = () => (
+    <>
+      <Button asChild size="sm" variant={"default"}>
+        <Link href="/create-list">Create List</Link>
+      </Button>
       <form action={signOutAction}>
         <Button type="submit" variant={"outline"}>
           Sign out
         </Button>
       </form>
+    </>
+  );
+
+  return user ? (
+    <div className="flex items-center gap-4">
+      <div className="hidden md:flex items-center gap-4">
+        <AuthLinks />
+      </div>
+      <div className="md:hidden">
+        <DropdownMenu>
+          <DropdownMenuTrigger asChild>
+            <Button variant="outline" size="icon">
+              <Menu className="h-4 w-4" />
+            </Button>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent align="end">
+            <DropdownMenuItem asChild>
+              <Link href="/create-list">Create List</Link>
+            </DropdownMenuItem>
+            <DropdownMenuItem asChild>
+              <form action={signOutAction}>
+                <button type="submit" className="w-full text-left">
+                  Sign out
+                </button>
+              </form>
+            </DropdownMenuItem>
+          </DropdownMenuContent>
+        </DropdownMenu>
+      </div>
     </div>
   ) : (
     <div className="flex gap-2">
