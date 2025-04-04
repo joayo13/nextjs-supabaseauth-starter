@@ -3,8 +3,7 @@ import { type NextRequest, NextResponse } from "next/server";
 
 // Define protected routes that require authentication
 const PROTECTED_ROUTES = [
-  "/dashboard",
-  "/create-list",
+  "/protected",
   // Add more protected routes here as needed
 ];
 
@@ -58,7 +57,7 @@ export const updateSession = async (request: NextRequest) => {
 
     // Redirect authenticated users away from home page
     if (request.nextUrl.pathname === "/" && !user.error) {
-      return NextResponse.redirect(new URL("/dashboard", request.url));
+      return NextResponse.redirect(new URL("/protected", request.url));
     }
 
     return response;

@@ -58,9 +58,6 @@ export default async function AuthButton() {
 
   const AuthLinks = () => (
     <>
-      <Button asChild size="sm" variant={"default"}>
-        <Link href="/create-list">Create List</Link>
-      </Button>
       <form action={signOutAction}>
         <Button type="submit" variant={"outline"}>
           Sign out
@@ -82,9 +79,6 @@ export default async function AuthButton() {
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end">
-            <DropdownMenuItem asChild>
-              <Link href="/create-list">Create List</Link>
-            </DropdownMenuItem>
             <DropdownMenuItem asChild>
               <form action={signOutAction}>
                 <button type="submit" className="w-full text-left">
