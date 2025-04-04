@@ -1,8 +1,5 @@
-import DeployButton from "@/components/deploy-button";
 import HeaderAuth from "@/components/header-auth";
 import { ThemeSwitcher } from "@/components/theme-switcher";
-import { TMDBAttribution } from "@/components/tmdb-attribution";
-import { hasEnvVars } from "@/utils/supabase/check-env-vars";
 import { Geist } from "next/font/google";
 import { ThemeProvider } from "next-themes";
 import Link from "next/link";
@@ -14,8 +11,8 @@ const defaultUrl = process.env.VERCEL_URL
 
 export const metadata = {
   metadataBase: new URL(defaultUrl),
-  title: "Reelists: Collaborative Movie Watchlists",
-  description: "Watch lists, make lists, share lists",
+  title: "Title",
+  description: "Description",
 };
 
 const geistSans = Geist({
